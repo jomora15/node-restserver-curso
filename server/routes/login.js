@@ -6,8 +6,9 @@ const Usuario = require('../models/usuario');
 const app = express();
 
 app.post('/login', (req, res) => {
-    let body = req.body;
+    let body = req.body; //Obtengo el body
 
+    //Encuentro el usuario por el correo
     Usuario.findOne({ email: body.email }, (err, usuarioBD) => {
         if (err) {
             return res.status(500).json({
@@ -25,6 +26,7 @@ app.post('/login', (req, res) => {
             });
         }
 
+        //Comparo la contraseña normal con la encriptada (bcrypt ya hace la validación)
         if (!bcrypt.compareSync(body.password, usuarioBD.password)) {
             return res.status(400).json({
                 ok: false,
@@ -34,9 +36,10 @@ app.post('/login', (req, res) => {
             });
         }
 
+        //Genero el token
         let token = jwt.sign({
             usuario: usuarioBD
-        }, 'este-es-el-secre-dev', { expiresIn: 60 * 60 * 24 * 30 });
+        }, process.env.SEED_TOKEN, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
         res.json({
             ok: true,
