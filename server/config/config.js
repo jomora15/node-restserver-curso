@@ -21,3 +21,7 @@ process.env.URLDB = urlDB;
 //======================
 process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30;
 process.env.SEED_TOKEN = process.env.SEED_TOKEN || 'este-es-el-secre-dev';
+
+// GOOGLE
+//======================
+process.env.CLIENT_ID = process.env.CLIENT_ID || '209260946719-h4fvlkbv65q2ddgee4ddbkf8mm6u6mb5.apps.googleusercontent.com';
